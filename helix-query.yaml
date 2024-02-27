@@ -1,0 +1,68 @@
+version: 1
+indices:
+  site:
+    include:
+      - '/**'
+    exclude:
+      - '/_drafts/**'
+      - '/_tools/**'
+      - '/sidekick/**'
+      - '/fragments/**'
+      - '/**/fragments/**'
+      - '/nav'
+      - '/**/nav'
+      - '/footer'
+      - '/**/footer'
+      - '/thankyou'
+      - '/**/thankyou'
+      - '/search'
+      - '/**/search'
+
+    target: /query-index.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      breadcrumbtitle:
+        select: head > meta[name="breadcrumbtitle"]
+        value: attribute(el, "content")
+      publisheddate:
+        select: head > meta[name="publisheddate"]
+        value: attribute(el, "content")
+      pagename:
+        select: head > meta[name="pagename"]
+        value: attribute(el, "content")
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, "content")
+      type:
+        select: head > meta[name="type"]
+        value: attribute(el, "content")
+      category:
+        select: head > meta[name="category"]
+        value: attribute(el, "content")
+      featured:
+        select: head > meta[name="featured"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, "content")
+      career-quote:
+        select: main .hero-career
+        value: match(el, '.*?\n?Quote\n([^\n]+)')
+      career-jobtitle:
+        select: main .hero-career
+        value: match(el, '.*?\n?Title\n([^\n]+)')
+      pagetype:
+        select: head > meta[name="pagetype"]
+        value: attribute(el, "content")
